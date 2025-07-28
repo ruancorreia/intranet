@@ -14,7 +14,6 @@
       rel="stylesheet"
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
     />
-    <link rel="stylesheet" href="style.css" />
     <style>
       body {
         min-height: 100vh;
@@ -24,11 +23,17 @@
         width: 280px;
         flex-shrink: 0;
       }
-      /* Estilo para o link ativo no menu */
       .nav-pills .nav-link.active,
       .nav-pills .show > .nav-link {
         color: #fff;
         background-color: #0d6efd;
+      }
+      .table-striped > tbody > tr:nth-of-type(odd) > * {
+        --bs-table-accent-bg: var(--bs-table-striped-bg);
+         color: var(--bs-table-striped-color, var(--bs-body-color));
+      }
+      .table th, .table td {
+        vertical-align: middle;
       }
     </style>
   </head>
@@ -117,71 +122,52 @@
     <main class="flex-grow-1 p-4">
       <header class="pb-3 mb-4 border-bottom">
         <h1 class="display-5">Agenda e Reservas</h1>
-        <p class="text-muted">Reserve equipamentos compartilhados para suas atividades.</p>
+        <p class="text-muted">Selecione um recurso, verifique a agenda e clique em um horário disponível para reservar.</p>
       </header>
 
-      <div class="row">
-        <div class="col-md-5">
+      <div class="row g-4">
+        <div class="col-lg-5">
           <div class="card shadow-sm">
             <div class="card-header">
-              <h5>Fazer uma Reserva</h5>
+              <h5>Selecione o Recurso</h5>
             </div>
             <div class="card-body">
-              <form>
                 <div class="mb-3">
                   <label for="recurso" class="form-label">Recurso</label>
                   <select class="form-select" id="recurso">
-                    <option selected>Selecione o recurso...</option>
-                    <option value="1">Carrinho de Notebooks</option>
+                    <option>Selecione o recurso...</option>
+                    <option value="1">Carrinho de Chromebook</option>
                     <option value="2">Chromebook</option>
-		    <option value="3">Caixa de Som</option>
+                    <option value="3">Caixa de Som</option>
                   </select>
                 </div>
-                <div class="mb-3">
-                  <label for="data" class="form-label">Data</label>
-                  <input type="date" class="form-control" id="data">
+                 <div class="alert alert-info" role="alert">
+                  <i class="bi bi-info-circle-fill me-2"></i>
+                  Para reservar, selecione um recurso acima e depois clique em um horário disponível na agenda ao lado.
                 </div>
-                <div class="mb-3">
-                    <label for="hora" class="form-label">Horário</label>
-                    <input type="time" class="form-control" id="hora">
-                </div>
-                <button type="submit" class="btn btn-primary w-100">
-                  <i class="bi bi-check-lg me-2"></i>Verificar Disponibilidade e Reservar
-                </button>
-              </form>
             </div>
           </div>
         </div>
 
-        <div class="col-md-7">
+        <div class="col-lg-7">
           <div class="card shadow-sm">
             <div class="card-header">
-              <h5>Disponibilidade para <strong>Chromebook</strong> em <strong>25/07/2024</strong></h5>
+              <h5 id="availability-header">Agenda para <strong id="current-date"></strong></h5>
             </div>
             <div class="card-body">
-              <p class="text-muted">Abaixo estão os horários do dia. Horários ocupados não podem ser selecionados.</p>
-              <ul class="list-group">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div><i class="bi bi-clock me-2"></i>09:00 - 10:00</div>
-                    <span class="badge bg-success">Disponível</span>
-                    <button class="btn btn-success btn-sm">Reservar</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div><i class="bi bi-clock me-2"></i>10:00 - 11:00</div>
-                    <span class="badge bg-danger">Ocupado</span>
-                    <button class="btn btn-danger btn-sm" disabled>Indisponível</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div><i class="bi bi-clock me-2"></i>11:00 - 12:00</div>
-                    <span class="badge bg-success">Disponível</span>
-                    <button class="btn btn-success btn-sm">Reservar</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <div><i class="bi bi-clock me-2"></i>14:00 - 15:00</div>
-                    <span class="badge bg-success">Disponível</span>
-                    <button class="btn btn-success btn-sm">Reservar</button>
-                </li>
-              </ul>
+              <div class="table-responsive">
+                  <table class="table table-bordered table-striped text-center">
+                      <thead class="table-light">
+                          <tr>
+                              <th>Horário</th>
+                              <th>Status</th>
+                              <th>Ação</th>
+                          </tr>
+                      </thead>
+                      <tbody id="calendar-body">
+                          </tbody>
+                  </table>
+              </div>
             </div>
           </div>
         </div>
@@ -193,5 +179,62 @@
       integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
       crossorigin="anonymous"
     ></script>
+    <script>
+      document.addEventListener('DOMContentLoaded', function() {
+        const dateElement = document.getElementById('current-date');
+        const today = new Date();
+        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
+        dateElement.textContent = today.toLocaleDateString('pt-BR', options);
+
+        const calendarBody = document.getElementById('calendar-body');
+        const startTime = 7;
+        const endTime = 18;
+
+        for (let hour = startTime; hour < endTime; hour++) {
+          const row = document.createElement('tr');
+          const timeSlot = `${String(hour).padStart(2, '0')}:00 - ${String(hour + 1).padStart(2, '0')}:00`;
+          const startTimeStr = `${String(hour).padStart(2, '0')}:00`;
+          
+          let status, button;
+
+          if (hour === 10) {
+            status = '<span class="badge bg-danger">Ocupado</span>';
+            button = '<button class="btn btn-danger btn-sm" disabled>Indisponível</button>';
+          } else {
+            status = '<span class="badge bg-success">Disponível</span>';
+            button = `<button class="btn btn-success btn-sm" onclick="reservar('${startTimeStr}')">Reservar</button>`;
+          }
+
+          row.innerHTML = `
+            <td><i class="bi bi-clock me-2"></i>${timeSlot}</td>
+            <td>${status}</td>
+            <td class="text-end">${button}</td>
+          `;
+          calendarBody.appendChild(row);
+        }
+      });
+
+      function reservar(hora) {
+          const recursoSelect = document.getElementById('recurso');
+          const recursoId = recursoSelect.value;
+          const recursoNome = recursoSelect.options[recursoSelect.selectedIndex].text;
+          const data = document.getElementById('current-date').textContent;
+
+          if (!recursoId || recursoNome === 'Selecione o recurso...') {
+              alert("Por favor, selecione um recurso na caixa à esquerda antes de continuar.");
+              recursoSelect.focus();
+              return;
+          }
+          
+          const params = new URLSearchParams({
+              recursoId: recursoId,
+              recursoNome: recursoNome,
+              data: data,
+              hora: hora
+          });
+
+          window.location.href = `confirmar_reserva.html?${params.toString()}`;
+      }
+    </script>
   </body>
 </html>
