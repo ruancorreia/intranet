@@ -35,6 +35,9 @@
       .table th, .table td {
         vertical-align: middle;
       }
+      #agenda-date {
+        max-width: 250px;
+      }
     </style>
   </head>
   <body class="bg-light">
@@ -122,7 +125,7 @@
     <main class="flex-grow-1 p-4">
       <header class="pb-3 mb-4 border-bottom">
         <h1 class="display-5">Agenda e Reservas</h1>
-        <p class="text-muted">Selecione um recurso, verifique a agenda e clique em um horário disponível para reservar.</p>
+        <p class="text-muted">Selecione um recurso, escolha uma data, e clique em um horário disponível para reservar.</p>
       </header>
 
       <div class="row g-4">
@@ -143,7 +146,7 @@
                 </div>
                  <div class="alert alert-info" role="alert">
                   <i class="bi bi-info-circle-fill me-2"></i>
-                  Para reservar, selecione um recurso acima e depois clique em um horário disponível na agenda ao lado.
+                  Para reservar, selecione um recurso, a data desejada e depois clique em um horário disponível.
                 </div>
             </div>
           </div>
@@ -152,9 +155,13 @@
         <div class="col-lg-7">
           <div class="card shadow-sm">
             <div class="card-header">
-              <h5 id="availability-header">Agenda para <strong id="current-date"></strong></h5>
+              <h5>Agenda de Horários</h5>
             </div>
             <div class="card-body">
+              <div class="mb-3">
+                <label for="agenda-date" class="form-label"><strong>Selecione a Data:</strong></label>
+                <input type="date" class="form-control" id="agenda-date">
+              </div>
               <div class="table-responsive">
                   <table class="table table-bordered table-striped text-center">
                       <thead class="table-light">
@@ -180,13 +187,21 @@
       crossorigin="anonymous"
     ></script>
     <script>
-      document.addEventListener('DOMContentLoaded', function() {
-        const dateElement = document.getElementById('current-date');
-        const today = new Date();
-        const options = { day: '2-digit', month: '2-digit', year: 'numeric' };
-        dateElement.textContent = today.toLocaleDateString('pt-BR', options);
-
+      // Função para renderizar a agenda com base na data selecionada
+      function renderCalendar(selectedDateStr) {
         const calendarBody = document.getElementById('calendar-body');
+        calendarBody.innerHTML = ''; // Limpa a agenda antes de renderizar
+
+        const today = new Date();
+        today.setHours(0, 0, 0, 0); // Zera o tempo para comparar apenas a data
+
+        // Trata a string da data para evitar problemas com fuso horário
+        const selectedDate = new Date(selectedDateStr + 'T00:00:00');
+        const currentHour = new Date().getHours();
+        
+        const isToday = (selectedDate.getTime() === today.getTime());
+        const isPastDate = selectedDate < today;
+
         const startTime = 7;
         const endTime = 18;
 
@@ -197,10 +212,16 @@
           
           let status, button;
 
-          if (hour === 10) {
+          if (isPastDate) {
+            status = '<span class="badge bg-secondary">Data Passada</span>';
+            button = '<button class="btn btn-secondary btn-sm" disabled>Indisponível</button>';
+          } else if (isToday && hour < currentHour) {
+            status = '<span class="badge bg-secondary">Encerrado</span>';
+            button = '<button class="btn btn-secondary btn-sm" disabled>Indisponível</button>';
+          } else if (hour === 10) { // Mantém o horário de exemplo como ocupado
             status = '<span class="badge bg-danger">Ocupado</span>';
             button = '<button class="btn btn-danger btn-sm" disabled>Indisponível</button>';
-          } else {
+          } else { // Horário futuro ou de hoje que ainda não passou
             status = '<span class="badge bg-success">Disponível</span>';
             button = `<button class="btn btn-success btn-sm" onclick="reservar('${startTimeStr}')">Reservar</button>`;
           }
@@ -212,13 +233,38 @@
           `;
           calendarBody.appendChild(row);
         }
+      }
+
+      document.addEventListener('DOMContentLoaded', function() {
+        const dateInput = document.getElementById('agenda-date');
+        
+        // Define a data inicial como hoje
+        const today = new Date();
+        const year = today.getFullYear();
+        const month = String(today.getMonth() + 1).padStart(2, '0');
+        const day = String(today.getDate()).padStart(2, '0');
+        const todayStr = `${year}-${month}-${day}`;
+
+        dateInput.value = todayStr;
+        
+        // Renderiza o calendário pela primeira vez com a data de hoje
+        renderCalendar(todayStr);
+
+        // Adiciona um listener para atualizar o calendário quando a data mudar
+        dateInput.addEventListener('change', function() {
+          renderCalendar(this.value);
+        });
       });
 
       function reservar(hora) {
           const recursoSelect = document.getElementById('recurso');
           const recursoId = recursoSelect.value;
           const recursoNome = recursoSelect.options[recursoSelect.selectedIndex].text;
-          const data = document.getElementById('current-date').textContent;
+          
+          // Pega a data do seletor de data
+          const dateValue = document.getElementById('agenda-date').value; // Formato YYYY-MM-DD
+          const [year, month, day] = dateValue.split('-');
+          const dataFormatada = `${day}/${month}/${year}`;
 
           if (!recursoId || recursoNome === 'Selecione o recurso...') {
               alert("Por favor, selecione um recurso na caixa à esquerda antes de continuar.");
@@ -229,7 +275,7 @@
           const params = new URLSearchParams({
               recursoId: recursoId,
               recursoNome: recursoNome,
-              data: data,
+              data: dataFormatada,
               hora: hora
           });
 
