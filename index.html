@@ -4,172 +4,66 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Intranet Corporativa</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <style>
-      body {
-        min-height: 100vh;
-        display: flex;
-      }
-      .sidebar {
-        width: 280px;
-        flex-shrink: 0;
-      }
-    </style>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="style.css" />
   </head>
-  <body class="bg-light">
-    <aside
-      class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar"
-    >
-      <a
-        href="index.html"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-      >
+  <body>
+    <aside class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
+      <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
         <i class="bi bi-building-gear me-2" style="font-size: 1.5rem"></i>
         <span class="fs-4">Intranet</span>
       </a>
       <hr />
       <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="central_de_telefonia.html" class="nav-link text-white"
-            ><i class="bi bi-telephone me-2"></i>Central de Telefonia</a
-          >
-        </li>
-        <li>
-          <a href="documentos_internos.html" class="nav-link text-white"
-            ><i class="bi bi-file-earmark-text me-2"></i>Documentos Internos</a
-          >
-        </li>
-        <li>
-          <a href="portal_do_colaborador.html" class="nav-link text-white"
-            ><i class="bi bi-person-badge me-2"></i>Portal do Colaborador</a
-          >
-        </li>
-        <li>
-          <a href="chamados_help_desk.html" class="nav-link text-white"
-            ><i class="bi bi-headset me-2"></i>Chamados (Help Desk)</a
-          >
-        </li>
-        <li>
-          <a href="agenda_e_reservas.html" class="nav-link text-white"
-            ><i class="bi bi-calendar-week me-2"></i>Agenda e Reservas</a
-          >
-        </li>
-        <li>
-          <a href="ordens_de_servico.html" class="nav-link text-white"
-            ><i class="bi bi-card-checklist me-2"></i>Ordens de Serviço</a
-          >
-        </li>
-        <li>
-          <a href="wiki_interna.html" class="nav-link text-white"
-            ><i class="bi bi-wikipedia me-2"></i>Wiki Interna</a
-          >
-        </li>
-        <li>
-          <a href="treinamentos.html" class="nav-link text-white"
-            ><i class="bi bi-mortarboard me-2"></i>Treinamentos</a
-          >
-        </li>
-        <li>
-          <a href="ocorrencias.html" class="nav-link text-white"
-            ><i class="bi bi-exclamation-octagon me-2"></i>Ocorrências</a
-          >
-        </li>
-        <li>
-          <a href="central_de_ideias.html" class="nav-link text-white"
-            ><i class="bi bi-lightbulb me-2"></i>Central de Ideias</a
-          >
-        </li>
-        <li>
-          <a href="indicadores_bi.html" class="nav-link text-white"
-            ><i class="bi bi-bar-chart-line me-2"></i>Indicadores (BI)</a
-          >
-        </li>
-        <li>
-          <a href="comunicados.html" class="nav-link text-white"
-            ><i class="bi bi-megaphone me-2"></i>Comunicados</a
-          >
-        </li>
-        <li>
-          <a href="catalogo_de_materiais.html" class="nav-link text-white"
-            ><i class="bi bi-box-seam me-2"></i>Catálogo de Materiais</a
-          >
-        </li>
+        <li class="nav-item"><a href="central_de_telefonia.html" class="nav-link text-white"><i class="bi bi-telephone me-2"></i>Central de Telefonia</a></li>
+        <li><a href="documentos_internos.html" class="nav-link text-white"><i class="bi bi-file-earmark-text me-2"></i>Documentos Internos</a></li>
+        <li><a href="portal_do_colaborador.html" class="nav-link text-white"><i class="bi bi-person-badge me-2"></i>Portal do Colaborador</a></li>
+        <li><a href="chamados_help_desk.html" class="nav-link text-white"><i class="bi bi-headset me-2"></i>Chamados (Help Desk)</a></li>
+        <li><a href="agenda_e_reservas.html" class="nav-link text-white"><i class="bi bi-calendar-week me-2"></i>Agenda e Reservas</a></li>
+        <li><a href="ordens_de_servico.html" class="nav-link text-white"><i class="bi bi-card-checklist me-2"></i>Ordens de Serviço</a></li>
+        <li><a href="wiki_interna.html" class="nav-link text-white"><i class="bi bi-wikipedia me-2"></i>Wiki Interna</a></li>
+        <li><a href="treinamentos.html" class="nav-link text-white"><i class="bi bi-mortarboard me-2"></i>Treinamentos</a></li>
+        <li><a href="ocorrencias.html" class="nav-link text-white"><i class="bi bi-exclamation-octagon me-2"></i>Ocorrências</a></li>
+        <li><a href="central_de_ideias.html" class="nav-link text-white"><i class="bi bi-lightbulb me-2"></i>Central de Ideias</a></li>
+        <li><a href="indicadores_bi.html" class="nav-link text-white"><i class="bi bi-bar-chart-line me-2"></i>Indicadores (BI)</a></li>
+        <li><a href="comunicados.html" class="nav-link text-white"><i class="bi bi-megaphone me-2"></i>Comunicados</a></li>
+        <li><a href="catalogo_de_materiais.html" class="nav-link text-white"><i class="bi bi-box-seam me-2"></i>Catálogo de Materiais</a></li>
       </ul>
       <hr />
     </aside>
-
     <main class="flex-grow-1 p-4">
-      <header class="pb-3 mb-4 border-bottom">
+      <header class="pb-3 mb-4 border-bottom fade-in">
         <h1 class="display-5">Bem-vindo à Intranet Corporativa</h1>
-        <p class="text-muted">
-          Selecione um módulo no menu ao lado para começar.
-        </p>
+        <p class="text-muted">Selecione um módulo no menu ao lado para começar.</p>
       </header>
-
       <div class="row">
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 mb-4 fade-in">
           <div class="card shadow-sm h-100">
-            <div class="card-header">
-              <h3 class="card-title h5">Resumo dos Módulos</h3>
-            </div>
+            <div class="card-header"><h3 class="card-title h5">Resumo dos Módulos</h3></div>
             <div class="card-body">
               <ul class="list-group list-group-flush">
-                <li class="list-group-item">
-                  <strong>Central de Telefonia:</strong> Diretório, ligações,
-                  gravações.
-                </li>
-                <li class="list-group-item">
-                  <strong>Chamados:</strong> Suporte técnico, manutenção, RH,
-                  etc.
-                </li>
-                <li class="list-group-item">
-                  <strong>Agenda:</strong> Eventos, reservas de salas e
-                  equipamentos.
-                </li>
-                <li class="list-group-item">
-                  <strong>Colaborador:</strong> Dados pessoais, folha, férias.
-                </li>
-                <li class="list-group-item">
-                  <strong>Treinamentos:</strong> Cursos internos, certificados.
-                </li>
+                <li class="list-group-item"><strong>Central de Telefonia:</strong> Diretório, ligações, gravações.</li>
+                <li class="list-group-item"><strong>Chamados:</strong> Suporte técnico, manutenção, RH, etc.</li>
+                <li class="list-group-item"><strong>Agenda:</strong> Eventos, reservas de salas e equipamentos.</li>
+                <li class="list-group-item"><strong>Colaborador:</strong> Dados pessoais, folha, férias.</li>
+                <li class="list-group-item"><strong>Treinamentos:</strong> Cursos internos, certificados.</li>
               </ul>
             </div>
           </div>
         </div>
-
-        <div class="col-md-6 mb-4">
+        <div class="col-md-6 mb-4 fade-in">
           <div class="card shadow-sm h-100">
-            <div class="card-header">
-              <h3 class="card-title h5">Notificações Recentes</h3>
-            </div>
+            <div class="card-header"><h3 class="card-title h5">Notificações Recentes</h3></div>
             <div class="card-body">
-              <div class="alert alert-info" role="alert">
-                <i class="bi bi-info-circle-fill me-2"></i> [28/07] Novo
-                treinamento de segurança disponível.
-              </div>
-              <div class="alert alert-warning" role="alert">
-                <i class="bi bi-exclamation-triangle-fill me-2"></i> [25/07]
-                Atualização de política de uso de telefone.
-              </div>
+              <div class="alert alert-info" role="alert"><i class="bi bi-info-circle-fill me-2"></i> [28/07] Novo treinamento de segurança disponível.</div>
+              <div class="alert alert-warning" role="alert"><i class="bi bi-exclamation-triangle-fill me-2"></i> [25/07] Atualização de política de uso de telefone.</div>
             </div>
           </div>
         </div>
       </div>
     </main>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
   </body>
 </html>

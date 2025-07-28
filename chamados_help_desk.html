@@ -1,237 +1,70 @@
 <!DOCTYPE html>
 <html lang="pt-br">
-  <head>
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Chamados (Help Desk) - Intranet Corporativa</title>
-    <link
-      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
-      rel="stylesheet"
-      integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
-      crossorigin="anonymous"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css"
-    />
-    <style>
-      body {
-        min-height: 100vh;
-        display: flex;
-      }
-      .sidebar {
-        width: 280px;
-        flex-shrink: 0;
-      }
-      /* Estilo para o link ativo no menu */
-      .nav-pills .nav-link.active,
-      .nav-pills .show > .nav-link {
-        color: #fff;
-        background-color: #0d6efd;
-      }
-      .badge {
-        font-size: 0.8rem;
-        font-weight: 600;
-      }
-    </style>
-  </head>
-  <body class="bg-light">
-    <aside
-      class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar"
-    >
-      <a
-        href="index.html"
-        class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"
-      >
-        <i class="bi bi-building-gear me-2" style="font-size: 1.5rem"></i>
-        <span class="fs-4">Intranet</span>
-      </a>
-      <hr />
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li class="nav-item">
-          <a href="central_de_telefonia.html" class="nav-link text-white"
-            ><i class="bi bi-telephone me-2"></i>Central de Telefonia</a
-          >
-        </li>
-        <li>
-          <a href="documentos_internos.html" class="nav-link text-white"
-            ><i class="bi bi-file-earmark-text me-2"></i>Documentos Internos</a
-          >
-        </li>
-        <li>
-          <a href="portal_do_colaborador.html" class="nav-link text-white"
-            ><i class="bi bi-person-badge me-2"></i>Portal do Colaborador</a
-          >
-        </li>
-        <li>
-          <a href="chamados_help_desk.html" class="nav-link active" aria-current="page"
-            ><i class="bi bi-headset me-2"></i>Chamados (Help Desk)</a
-          >
-        </li>
-        <li>
-          <a href="agenda_e_reservas.html" class="nav-link text-white"
-            ><i class="bi bi-calendar-week me-2"></i>Agenda e Reservas</a
-          >
-        </li>
-        <li>
-          <a href="ordens_de_servico.html" class="nav-link text-white"
-            ><i class="bi bi-card-checklist me-2"></i>Ordens de Serviço</a
-          >
-        </li>
-        <li>
-          <a href="wiki_interna.html" class="nav-link text-white"
-            ><i class="bi bi-wikipedia me-2"></i>Wiki Interna</a
-          >
-        </li>
-        <li>
-          <a href="treinamentos.html" class="nav-link text-white"
-            ><i class="bi bi-mortarboard me-2"></i>Treinamentos</a
-          >
-        </li>
-        <li>
-          <a href="ocorrencias.html" class="nav-link text-white"
-            ><i class="bi bi-exclamation-octagon me-2"></i>Ocorrências</a
-          >
-        </li>
-        <li>
-          <a href="central_de_ideias.html" class="nav-link text-white"
-            ><i class="bi bi-lightbulb me-2"></i>Central de Ideias</a
-          >
-        </li>
-        <li>
-          <a href="indicadores_bi.html" class="nav-link text-white"
-            ><i class="bi bi-bar-chart-line me-2"></i>Indicadores (BI)</a
-          >
-        </li>
-        <li>
-          <a href="comunicados.html" class="nav-link text-white"
-            ><i class="bi bi-megaphone me-2"></i>Comunicados</a
-          >
-        </li>
-        <li>
-          <a href="catalogo_de_materiais.html" class="nav-link text-white"
-            ><i class="bi bi-box-seam me-2"></i>Catálogo de Materiais</a
-          >
-        </li>
-      </ul>
-      <hr />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+    <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+    <aside class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
+        <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
+            <i class="bi bi-building-gear me-2" style="font-size: 1.5rem"></i>
+            <span class="fs-4">Intranet</span>
+        </a>
+        <hr />
+        <ul class="nav nav-pills flex-column mb-auto">
+            <li class="nav-item"><a href="central_de_telefonia.html" class="nav-link text-white"><i class="bi bi-telephone me-2"></i>Central de Telefonia</a></li>
+            <li><a href="documentos_internos.html" class="nav-link text-white"><i class="bi bi-file-earmark-text me-2"></i>Documentos Internos</a></li>
+            <li><a href="portal_do_colaborador.html" class="nav-link text-white"><i class="bi bi-person-badge me-2"></i>Portal do Colaborador</a></li>
+            <li><a href="chamados_help_desk.html" class="nav-link active" aria-current="page"><i class="bi bi-headset me-2"></i>Chamados (Help Desk)</a></li>
+            <li><a href="agenda_e_reservas.html" class="nav-link text-white"><i class="bi bi-calendar-week me-2"></i>Agenda e Reservas</a></li>
+            <li><a href="ordens_de_servico.html" class="nav-link text-white"><i class="bi bi-card-checklist me-2"></i>Ordens de Serviço</a></li>
+            <li><a href="wiki_interna.html" class="nav-link text-white"><i class="bi bi-wikipedia me-2"></i>Wiki Interna</a></li>
+            <li><a href="treinamentos.html" class="nav-link text-white"><i class="bi bi-mortarboard me-2"></i>Treinamentos</a></li>
+            <li><a href="ocorrencias.html" class="nav-link text-white"><i class="bi bi-exclamation-octagon me-2"></i>Ocorrências</a></li>
+            <li><a href="central_de_ideias.html" class="nav-link text-white"><i class="bi bi-lightbulb me-2"></i>Central de Ideias</a></li>
+            <li><a href="indicadores_bi.html" class="nav-link text-white"><i class="bi bi-bar-chart-line me-2"></i>Indicadores (BI)</a></li>
+            <li><a href="comunicados.html" class="nav-link text-white"><i class="bi bi-megaphone me-2"></i>Comunicados</a></li>
+            <li><a href="catalogo_de_materiais.html" class="nav-link text-white"><i class="bi bi-box-seam me-2"></i>Catálogo de Materiais</a></li>
+        </ul>
+        <hr />
     </aside>
-
     <main class="flex-grow-1 p-4">
-      <header class="pb-3 mb-4 border-bottom">
-        <h1 class="display-5">Listagem de Chamados</h1>
-        <p class="text-muted">Acompanhe e gerencie suas solicitações de suporte.</p>
-      </header>
-
-      <div class="d-flex justify-content-start align-items-center mb-4 gap-2">
-        <button class="btn btn-primary"><i class="bi bi-plus-lg me-2"></i>Cadastrar</button>
-        <button class="btn btn-secondary"><i class="bi bi-funnel me-2"></i>Filtros</button>
-        <button class="btn btn-outline-secondary"><i class="bi bi-arrow-clockwise me-2"></i>Atualizar</button>
-        <button class="btn btn-outline-danger"><i class="bi bi-trash me-2"></i>Limpar Filtros</button>
-        <div class="ms-auto">
-            <button class="btn btn-success"><i class="bi bi-download me-2"></i>Exportar</button>
+        <header class="pb-3 mb-4 border-bottom fade-in">
+            <h1 class="display-5">Listagem de Chamados</h1>
+            <p class="text-muted">Acompanhe e gerencie suas solicitações de suporte.</p>
+        </header>
+        <div class="d-flex justify-content-start align-items-center mb-4 gap-2 fade-in">
+            <form id="formNovoChamado"><button class="btn btn-primary" type="submit"><i class="bi bi-plus-lg me-2"></i>Novo Chamado</button></form>
+            <button class="btn btn-secondary"><i class="bi bi-funnel me-2"></i>Filtros</button>
         </div>
-      </div>
-
-
-      <div class="card shadow-sm">
-        <div class="card-body">
-            <div class="table-responsive">
-                <table class="table table-striped table-hover">
-                  <thead class="table-light">
-                    <tr>
-                      <th scope="col" style="width: 5%;">Ações</th>
-                      <th scope="col">ID</th>
-                      <th scope="col">Abertura</th>
-                      <th scope="col">Tipo do Problema</th>
-                      <th scope="col">Solicitante</th>
-                      <th scope="col">Produto</th>
-                      <th scope="col">Categoria</th>
-                      <th scope="col">Situação</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr>
-                        <td><a href="#" class="text-secondary"><i class="bi bi-search"></i></a> <a href="#" class="text-secondary"><i class="bi bi-pencil-square"></i></a></td>
-                        <td>1581</td>
-                        <td>16/08/2022</td>
-                        <td>Problemas de rede</td>
-                        <td>Administrator</td>
-                        <td>E-Commerce</td>
-                        <td>Hardware</td>
-                        <td><span class="badge text-bg-danger">Rejeitado</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="text-secondary"><i class="bi bi-search"></i></a> <a href="#" class="text-secondary"><i class="bi bi-pencil-square"></i></a></td>
-                        <td>1587</td>
-                        <td>16/08/2022</td>
-                        <td>Computador não liga</td>
-                        <td>Administrator</td>
-                        <td>E-Commerce</td>
-                        <td>Software</td>
-                        <td><span class="badge text-bg-primary">Aguardando</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="text-secondary"><i class="bi bi-search"></i></a> <a href="#" class="text-secondary"><i class="bi bi-pencil-square"></i></a></td>
-                        <td>1599</td>
-                        <td>16/08/2022</td>
-                        <td>Software indisponível</td>
-                        <td>Administrator</td>
-                        <td>Site</td>
-                        <td>Software</td>
-                        <td><span class="badge text-bg-danger">Rejeitado</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="text-secondary"><i class="bi bi-search"></i></a> <a href="#" class="text-secondary"><i class="bi bi-pencil-square"></i></a></td>
-                        <td>1601</td>
-                        <td>16/08/2022</td>
-                        <td>Software indisponível</td>
-                        <td>Administrator</td>
-                        <td>CRM</td>
-                        <td>Rede</td>
-                        <td><span class="badge text-bg-secondary">Fechado</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="text-secondary"><i class="bi bi-search"></i></a> <a href="#" class="text-secondary"><i class="bi bi-pencil-square"></i></a></td>
-                        <td>1615</td>
-                        <td>16/08/2022</td>
-                        <td>Problemas de rede</td>
-                        <td>Administrator</td>
-                        <td>CRM</td>
-                        <td>Hardware</td>
-                        <td><span class="badge text-bg-warning">Em Atendimento</span></td>
-                    </tr>
-                    <tr>
-                        <td><a href="#" class="text-secondary"><i class="bi bi-search"></i></a> <a href="#" class="text-secondary"><i class="bi bi-pencil-square"></i></a></td>
-                        <td>1645</td>
-                        <td>16/08/2022</td>
-                        <td>Computador não liga</td>
-                        <td>Administrator</td>
-                        <td>E-Commerce</td>
-                        <td>Hardware</td>
-                        <td><span class="badge text-bg-info">Aberto</span></td>
-                    </tr>
-                     <tr>
-                        <td><a href="#" class="text-secondary"><i class="bi bi-search"></i></a> <a href="#" class="text-secondary"><i class="bi bi-pencil-square"></i></a></td>
-                        <td>1663</td>
-                        <td>16/08/2022</td>
-                        <td>Regra de negócio falha</td>
-                        <td>Administrator</td>
-                        <td>Site</td>
-                        <td>Software</td>
-                        <td><span class="badge text-bg-secondary">Fechado</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
+        <div class="card shadow-sm fade-in">
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped table-hover">
+                        <thead class="table-light">
+                        <tr>
+                            <th scope="col" style="width: 5%;">Ações</th>
+                            <th scope="col">ID</th>
+                            <th scope="col">Abertura</th>
+                            <th scope="col">Tipo do Problema</th>
+                            <th scope="col">Solicitante</th>
+                            <th scope="col">Produto</th>
+                            <th scope="col">Categoria</th>
+                            <th scope="col">Situação</th>
+                        </tr>
+                        </thead>
+                        <tbody id="tabelaChamadosBody">
+                            </tbody>
+                    </table>
+                </div>
+            </div>
         </div>
-      </div>
     </main>
-
-    <script
-      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
-      integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
-      crossorigin="anonymous"
-    ></script>
-  </body>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="main.js"></script>
+</body>
 </html>

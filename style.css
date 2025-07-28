@@ -1,0 +1,121 @@
+/* Intranet/style.css */
+
+/* --- Variáveis de Cor --- */
+:root {
+    --cor-primaria: #1c4482;
+    --cor-secundaria: #e4c42c;
+    --cor-fundo: #e5efee;
+    --cor-texto-claro: #ffffff;
+    --cor-texto-escuro: #333333;
+    --cor-sombra: rgba(0, 0, 0, 0.1);
+  }
+  
+  /* --- Estilos Gerais --- */
+  body {
+    min-height: 100vh;
+    display: flex;
+    background-color: var(--cor-fundo);
+    color: var(--cor-texto-escuro);
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
+  /* --- Efeito de Animação no Scroll --- */
+  .fade-in {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  
+  .fade-in.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  
+  
+  /* --- Sidebar --- */
+  .sidebar {
+    width: 280px;
+    flex-shrink: 0;
+    background-color: var(--cor-primaria) !important;
+  }
+  
+  .sidebar .nav-link {
+    color: var(--cor-texto-claro) !important;
+    transition: background-color 0.3s;
+  }
+  
+  .sidebar .nav-link:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+  }
+  
+  .sidebar .nav-link.active {
+    background-color: var(--cor-secundaria) !important;
+    color: var(--cor-primaria) !important;
+    font-weight: bold;
+  }
+  
+  .sidebar .fs-4 {
+      color: var(--cor-texto-claro);
+  }
+  
+  .sidebar hr {
+      border-top: 1px solid rgba(255, 255, 255, 0.2);
+  }
+  
+  
+  /* --- Conteúdo Principal --- */
+  main {
+    flex-grow: 1;
+    padding: 2.5rem !important;
+  }
+  
+  main .display-5 {
+      color: var(--cor-primaria);
+  }
+  
+  /* --- Componentes Bootstrap --- */
+  .card {
+    border: none;
+    border-radius: 0.5rem;
+    box-shadow: 0 4px 8px var(--cor-sombra) !important;
+  }
+  
+  .card-header {
+      background-color: #f8f9fa;
+      border-bottom: 1px solid #dee2e6;
+  }
+  
+  .btn-primary {
+    background-color: var(--cor-primaria);
+    border-color: var(--cor-primaria);
+  }
+  
+  .btn-primary:hover {
+    background-color: #153566;
+    border-color: #153566;
+  }
+  
+  .btn-secondary {
+      background-color: var(--cor-secundaria);
+      border-color: var(--cor-secundaria);
+      color: var(--cor-primaria);
+  }
+  
+  .btn-secondary:hover {
+      background-color: #cba822;
+      border-color: #cba822;
+      color: var(--cor-primaria);
+  }
+  
+  .form-control:focus {
+      border-color: var(--cor-secundaria);
+      box-shadow: 0 0 0 0.25rem rgba(228, 196, 44, 0.5);
+  }
+  
+  .badge.text-bg-primary {
+      background-color: var(--cor-primaria) !important;
+  }
