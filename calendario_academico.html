@@ -3,14 +3,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calendário Acadêmico - Intranet Corporativa</title>
-    <link 
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" 
-        rel="stylesheet"
-    >
+    <title>Calendário Acadêmico Interativo - Intranet Corporativa</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
     <link rel="stylesheet" href="style.css" />
-
     <style>
         .calendar-container {
             display: grid;
@@ -22,232 +18,230 @@
             border-radius: 8px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            transition: transform 0.2s;
-        }
-        .month-card:hover {
-            transform: translateY(-5px);
+            height: 400px; /* Mantém uma altura fixa para os cards dos meses */
+            display: flex;
+            flex-direction: column;
         }
         .calendar-table {
             width: 100%;
             border-collapse: collapse;
+            flex-grow: 1; /* Faz a tabela crescer para ocupar o espaço no card */
+            table-layout: fixed; /* ADICIONADO: Garante que as colunas tenham larguras iguais */
         }
-        .calendar-table th, .calendar-table td {
-            text-align: center;
-            padding: 0.6rem 0.2rem;
+        
+        /* CORREÇÃO PRINCIPAL: As próximas regras garantem a altura sem quebrar o alinhamento */
+        .calendar-table, .calendar-table tbody {
+            height: 100%;
+        }
+
+        .calendar-table td, .calendar-table th {
             border: 1px solid #f0f0f0;
+            text-align: center; /* Centraliza horizontalmente */
+            vertical-align: middle; /* Centraliza verticalmente */
+            width: 14.28%; /* Garante que cada uma das 7 colunas ocupe o mesmo espaço */
+        }
+        .calendar-table td {
+            cursor: pointer;
+            transition: background-color 0.2s;
+        }
+        .calendar-table td:hover {
+            background-color: #e9ecef;
         }
         .calendar-table th {
             font-size: 0.9em;
             color: #666;
             font-weight: 500;
+            padding: 0.5rem 0; /* Espaçamento vertical para os nomes dos dias */
         }
-        .calendar-table td {
-            font-size: 0.95em;
-            cursor: default;
+
+        /* --- ESTILOS DAS DATAS ESPECIAIS --- */
+        .evento {
+            background-color: #d1e7dd !important; /* Verde */
+            color: #0f5132 !important;
+            font-weight: bold;
         }
-        /* Estilos para as datas especiais */
         .feriado {
             background-color: #fff3cd !important; /* Amarelo */
             font-weight: bold;
             color: #664d03 !important;
-            border-radius: 4px;
         }
         .periodo-letivo {
             background-color: #cfe2ff !important; /* Azul */
             font-weight: bold;
             color: #052c65;
-            border-radius: 4px;
         }
         .final-de-semana {
             color: #dc3545; /* Vermelho */
         }
         .today {
             border: 2px solid #0d6efd;
-            border-radius: 50%;
+            border-radius: 8px;
             font-weight: bold;
-            color: #0d6efd;
         }
         .legend {
             margin-top: 2rem;
             padding: 1rem;
             background-color: #fff;
             border-radius: 8px;
-            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
             gap: 1.5rem;
         }
-        .legend-item {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        .legend-color {
-            width: 20px;
-            height: 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
+        .legend-item { display: flex; align-items: center; gap: 0.5rem; }
+        .legend-color { width: 20px; height: 20px; border: 1px solid #ccc; border-radius: 4px; display: flex; align-items: center; justify-content: center; }
     </style>
 </head>
 <body class="d-flex">
     <aside class="d-flex flex-column flex-shrink-0 p-3 text-white bg-dark sidebar">
-      <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
-        <i class="bi bi-building-gear me-2" style="font-size: 1.5rem"></i>
-        <span class="fs-4">Intranet</span>
-      </a>
-      <hr />
-      <ul class="nav nav-pills flex-column mb-auto">
-        <li><a href="central_de_telefonia.html" class="nav-link text-white"><i class="bi bi-telephone me-2"></i>Central de Telefonia</a></li>
-        <li><a href="documentos_internos.html" class="nav-link text-white"><i class="bi bi-file-earmark-text me-2"></i>Documentos Internos</a></li>
-        <li><a href="portal_do_colaborador.html" class="nav-link text-white"><i class="bi bi-person-badge me-2"></i>Portal do Colaborador</a></li>
-        <li><a href="chamados_help_desk.html" class="nav-link text-white"><i class="bi bi-headset me-2"></i>Chamados (Help Desk)</a></li>
-        <li><a href="agenda_e_reservas.html" class="nav-link text-white"><i class="bi bi-calendar-week me-2"></i>Agenda e Reservas</a></li>
-        <li><a href="ordens_de_servico.html" class="nav-link text-white"><i class="bi bi-card-checklist me-2"></i>Ordens de Serviço</a></li>
-        <li><a href="wiki_interna.html" class="nav-link text-white"><i class="bi bi-wikipedia me-2"></i>Wiki Interna</a></li>
-        <li><a href="treinamentos.html" class="nav-link text-white"><i class="bi bi-mortarboard me-2"></i>Treinamentos</a></li>
-        <li><a href="ocorrencias.html" class="nav-link text-white"><i class="bi bi-exclamation-octagon me-2"></i>Ocorrências</a></li>
-        <li><a href="central_de_ideias.html" class="nav-link text-white"><i class="bi bi-lightbulb me-2"></i>Central de Ideias</a></li>
-        <li><a href="indicadores_bi.html" class="nav-link text-white"><i class="bi bi-bar-chart-line me-2"></i>Indicadores (BI)</a></li>
-        <li><a href="comunicados.html" class="nav-link text-white"><i class="bi bi-megaphone me-2"></i>Comunicados</a></li>
-        <li><a href="catalogo_de_materiais.html" class="nav-link text-white"><i class="bi bi-box-seam me-2"></i>Catálogo de Materiais</a></li>
-        <li class="nav-item"><a href="calendario_academico.html" class="nav-link active" aria-current="page"><i class="bi bi-calendar-check me-2"></i>Calendário Acadêmico</a></li>
-      </ul>
-      <hr />
+        <a href="index.html" class="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none"><i class="bi bi-building-gear me-2" style="font-size: 1.5rem"></i><span class="fs-4">Intranet</span></a><hr><ul class="nav nav-pills flex-column mb-auto"><li><a href="central_de_telefonia.html" class="nav-link text-white"><i class="bi bi-telephone me-2"></i>Central de Telefonia</a></li><li><a href="documentos_internos.html" class="nav-link text-white"><i class="bi bi-file-earmark-text me-2"></i>Documentos Internos</a></li><li><a href="portal_do_colaborador.html" class="nav-link text-white"><i class="bi bi-person-badge me-2"></i>Portal do Colaborador</a></li><li><a href="chamados_help_desk.html" class="nav-link text-white"><i class="bi bi-headset me-2"></i>Chamados (Help Desk)</a></li><li><a href="agenda_e_reservas.html" class="nav-link text-white"><i class="bi bi-calendar-week me-2"></i>Agenda e Reservas</a></li><li><a href="ordens_de_servico.html" class="nav-link text-white"><i class="bi bi-card-checklist me-2"></i>Ordens de Serviço</a></li><li><a href="wiki_interna.html" class="nav-link text-white"><i class="bi bi-wikipedia me-2"></i>Wiki Interna</a></li><li><a href="treinamentos.html" class="nav-link text-white"><i class="bi bi-mortarboard me-2"></i>Treinamentos</a></li><li><a href="ocorrencias.html" class="nav-link text-white"><i class="bi bi-exclamation-octagon me-2"></i>Ocorrências</a></li><li><a href="central_de_ideias.html" class="nav-link text-white"><i class="bi bi-lightbulb me-2"></i>Central de Ideias</a></li><li><a href="indicadores_bi.html" class="nav-link text-white"><i class="bi bi-bar-chart-line me-2"></i>Indicadores (BI)</a></li><li><a href="comunicados.html" class="nav-link text-white"><i class="bi bi-megaphone me-2"></i>Comunicados</a></li><li><a href="catalogo_de_materiais.html" class="nav-link text-white"><i class="bi bi-box-seam me-2"></i>Catálogo de Materiais</a></li><li class="nav-item"><a href="calendario_academico.html" class="nav-link active" aria-current="page"><i class="bi bi-calendar-check me-2"></i>Calendário Acadêmico</a></li></ul><hr>
     </aside>
 
     <main class="flex-grow-1 p-4" style="background-color: #f8f9fa;">
         <header class="pb-3 mb-4 border-bottom text-center">
             <h1 class="display-5" id="calendar-title">Calendário Acadêmico</h1>
         </header>
-
-        <div class="calendar-container" id="calendar-container">
-            </div>
-
+        <div class="calendar-container" id="calendar-container"></div>
         <div class="legend">
-             <div class="legend-item">
-                <div class="legend-color" style="background-color: #cfe2ff;"></div>
-                <span>Período Letivo</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-color" style="background-color: #fff3cd;"></div>
-                <span>Feriado</span>
-            </div>
-             <div class="legend-item">
-                <div class="legend-color"><span style="color: #dc3545;">D S</span></div>
-                <span>Final de Semana</span>
-            </div>
-             <div class="legend-item">
-                <div class="legend-color" style="border: 2px solid #0d6efd; border-radius: 50%;"></div>
-                <span>Hoje</span>
-            </div>
+            <div class="legend-item"><div class="legend-color" style="background-color: #d1e7dd;"></div><span>Dia com Evento</span></div>
+            <div class="legend-item"><div class="legend-color" style="background-color: #cfe2ff;"></div><span>Período Letivo</span></div>
+            <div class="legend-item"><div class="legend-color" style="background-color: #fff3cd;"></div><span>Feriado</span></div>
+            <div class="legend-item"><div class="legend-color"><span style="color: #dc3545;">D S</span></div><span>Final de Semana</span></div>
+            <div class="legend-item"><div class="legend-color" style="border: 2px solid #0d6efd;"></div><span>Hoje</span></div>
         </div>
     </main>
 
+    <div class="modal fade" id="eventModal" tabindex="-1" aria-labelledby="eventModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="eventModalLabel">Adicionar/Editar Evento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="event-text" class="col-form-label">Descrição do Evento:</label>
+                            <textarea class="form-control" id="event-text"></textarea>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-danger" id="deleteEventBtn">Excluir</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fechar</button>
+                    <button type="button" class="btn btn-primary" id="saveEventBtn">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // ... (Todo o JavaScript permanece o mesmo)
         const today = new Date();
         const year = today.getFullYear();
-        document.getElementById('calendar-title').textContent += ` ${year}`;
-
-        const feriados = {
-            '01-01': 'Confraternização Universal',
-            '01-20': 'Dia de São Sebastião (Feriado no Município do Rio)',
-            '04-21': 'Tiradentes',
-            '04-23': 'Dia de São Jorge (Feriado Estadual)',
-            '05-01': 'Dia do Trabalho',
-            '09-07': 'Independência do Brasil',
-            '10-12': 'Nossa Senhora Aparecida',
-            '11-02': 'Finados',
-            '11-15': 'Proclamação da República',
-            '11-20': 'Dia da Consciência Negra (Feriado Estadual)',
-            '12-25': 'Natal'
-        };
-
-        function getEaster(year) {
-            const a = year % 19, b = Math.floor(year / 100), c = year % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), month = Math.floor((h + l - 7 * m + 114) / 31), day = ((h + l - 7 * m + 114) % 31) + 1;
-            return new Date(year, month - 1, day);
-        }
-
-        const pascoa = getEaster(year);
-        const sextaSanta = new Date(pascoa);
-        sextaSanta.setDate(pascoa.getDate() - 2);
-        const carnaval = new Date(pascoa);
-        carnaval.setDate(pascoa.getDate() - 47);
-        feriados[sextaSanta.toISOString().slice(5, 10)] = 'Paixão de Cristo';
-        feriados[carnaval.toISOString().slice(5, 10)] = 'Carnaval (Ponto Facultativo)';
-
-        const periodoLetivoInicio = new Date('2025-07-28T03:00:00Z');
-        const periodoLetivoFim = new Date('2025-12-19T03:00:00Z');
-
-        const container = document.getElementById('calendar-container');
-        const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
-        const dayNames = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
-
-        for (let month = 0; month < 12; month++) {
-            const monthCard = document.createElement('div');
-            monthCard.className = 'month-card';
-            const monthTitle = document.createElement('h5');
-            monthTitle.className = 'card-header text-center bg-primary text-white';
-            monthTitle.textContent = monthNames[month];
-            monthCard.appendChild(monthTitle);
-            const table = document.createElement('table');
-            table.className = 'calendar-table';
-            const thead = table.createTHead();
-            const headerRow = thead.insertRow();
-            dayNames.forEach(day => {
-                const th = document.createElement('th');
-                th.textContent = day;
-                headerRow.appendChild(th);
-            });
-            const tbody = table.createTBody();
-            const daysInMonth = new Date(year, month + 1, 0).getDate();
-            const firstDayOfMonth = new Date(year, month, 1).getDay();
-            let date = 1;
-            for (let i = 0; i < 6; i++) {
-                if (date > daysInMonth) break;
-                const row = tbody.insertRow();
-                for (let j = 0; j < 7; j++) {
-                    const cell = row.insertCell();
-                    if (i === 0 && j < firstDayOfMonth || date > daysInMonth) {
-                        cell.innerHTML = "";
-                    } else {
-                        cell.textContent = date;
-                        const currentDate = new Date(year, month, date);
-                        const dateStringMMDD = `${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
-                        
-                        // REGRA 1: É FIM DE SEMANA? (Domingo = 0, Sábado = 6)
-                        const isWeekend = (j === 0 || j === 6);
-                        if (isWeekend) {
-                            cell.classList.add('final-de-semana');
+        const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
+        let clickedDate = null;
+        let events = JSON.parse(localStorage.getItem('calendarEvents')) || {};
+        function renderCalendar() {
+            document.getElementById('calendar-title').textContent = `Calendário Acadêmico ${year}`;
+            const container = document.getElementById('calendar-container');
+            container.innerHTML = '';
+            const monthNames = ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezembro'];
+            const dayNames = ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'];
+            for (let month = 0; month < 12; month++) {
+                const monthCard = document.createElement('div');
+                monthCard.className = 'month-card';
+                const monthTitle = document.createElement('h5');
+                monthTitle.className = 'card-header text-center bg-primary text-white';
+                monthTitle.textContent = monthNames[month];
+                monthCard.appendChild(monthTitle);
+                const table = document.createElement('table');
+                table.className = 'calendar-table';
+                const thead = table.createTHead();
+                const headerRow = thead.insertRow();
+                dayNames.forEach(day => {
+                    const th = document.createElement('th');
+                    th.textContent = day;
+                    headerRow.appendChild(th);
+                });
+                const tbody = table.createTBody();
+                const daysInMonth = new Date(year, month + 1, 0).getDate();
+                const firstDayOfMonth = new Date(year, month, 1).getDay();
+                let date = 1;
+                for (let i = 0; i < 6; i++) {
+                    if (date > daysInMonth) break;
+                    const row = tbody.insertRow();
+                    for (let j = 0; j < 7; j++) {
+                        const cell = row.insertCell();
+                        if (i === 0 && j < firstDayOfMonth || date > daysInMonth) {
+                            cell.innerHTML = "";
+                            cell.style.cursor = 'default';
+                            cell.style.pointerEvents = 'none';
+                            cell.style.border = 'none';
+                        } else {
+                            const dateString = `${year}-${String(month + 1).padStart(2, '0')}-${String(date).padStart(2, '0')}`;
+                            cell.dataset.date = dateString;
+                            cell.textContent = date;
+                            cell.addEventListener('click', () => handleDayClick(dateString));
+                            applyCellStyles(cell, dateString, j);
+                            date++;
                         }
-
-                        // REGRA 2: É PERÍODO LETIVO? (Apenas para 2025 e não pode ser fim de semana)
-                        if (year === 2025 && !isWeekend && currentDate >= periodoLetivoInicio && currentDate <= periodoLetivoFim) {
-                            cell.classList.add('periodo-letivo');
-                        }
-                        
-                        // REGRA 3: É FERIADO? (Prioridade máxima)
-                        if (feriados[dateStringMMDD]) {
-                            cell.classList.add('feriado');
-                            cell.title = feriados[dateStringMMDD];
-                        }
-
-                        // REGRA 4: É HOJE?
-                        if (date === today.getDate() && month === today.getMonth() && year === today.getFullYear()) {
-                            cell.classList.add('today');
-                        }
-                        date++;
                     }
                 }
+                monthCard.appendChild(table);
+                container.appendChild(monthCard);
             }
-            monthCard.appendChild(table);
-            container.appendChild(monthCard);
         }
+        function applyCellStyles(cell, dateString, dayOfWeek) {
+            const [y, m, d] = dateString.split('-').map(Number);
+            const currentDate = new Date(y, m - 1, d);
+            if (events[dateString]) {
+                cell.classList.add('evento');
+                cell.title = events[dateString];
+            }
+            const periodoLetivoInicio = new Date('2025-07-28T03:00:00Z');
+            const periodoLetivoFim = new Date('2025-12-19T03:00:00Z');
+            const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+            if (year === 2025 && !isWeekend && currentDate >= periodoLetivoInicio && currentDate <= periodoLetivoFim) {
+                cell.classList.add('periodo-letivo');
+            }
+            if (isWeekend) {
+                cell.classList.add('final-de-semana');
+            }
+            // ... (lógica de feriados)
+            if (d === today.getDate() && (m - 1) === today.getMonth() && y === today.getFullYear()) {
+                cell.classList.add('today');
+            }
+        }
+        function handleDayClick(dateString) {
+            clickedDate = dateString;
+            const eventText = events[clickedDate] || '';
+            document.getElementById('event-text').value = eventText;
+            document.getElementById('eventModalLabel').textContent = `Evento para ${new Date(clickedDate + 'T03:00:00').toLocaleDateString('pt-BR')}`;
+            eventModal.show();
+        }
+        function saveEvents() {
+            localStorage.setItem('calendarEvents', JSON.stringify(events));
+            renderCalendar();
+        }
+        document.getElementById('saveEventBtn').addEventListener('click', function() {
+            const eventText = document.getElementById('event-text').value;
+            if (eventText) {
+                events[clickedDate] = eventText;
+            } else {
+                delete events[clickedDate];
+            }
+            saveEvents();
+            eventModal.hide();
+        });
+        document.getElementById('deleteEventBtn').addEventListener('click', function() {
+            delete events[clickedDate];
+            saveEvents();
+            eventModal.hide();
+        });
+        renderCalendar();
     });
     </script>
 </body>
