@@ -18,27 +18,24 @@
             border-radius: 8px;
             background-color: #fff;
             box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-            height: 400px; /* Mantém uma altura fixa para os cards dos meses */
+            height: 400px;
             display: flex;
             flex-direction: column;
         }
         .calendar-table {
             width: 100%;
             border-collapse: collapse;
-            flex-grow: 1; /* Faz a tabela crescer para ocupar o espaço no card */
-            table-layout: fixed; /* ADICIONADO: Garante que as colunas tenham larguras iguais */
+            flex-grow: 1;
+            table-layout: fixed;
         }
-        
-        /* CORREÇÃO PRINCIPAL: As próximas regras garantem a altura sem quebrar o alinhamento */
         .calendar-table, .calendar-table tbody {
             height: 100%;
         }
-
         .calendar-table td, .calendar-table th {
             border: 1px solid #f0f0f0;
-            text-align: center; /* Centraliza horizontalmente */
-            vertical-align: middle; /* Centraliza verticalmente */
-            width: 14.28%; /* Garante que cada uma das 7 colunas ocupe o mesmo espaço */
+            text-align: center;
+            vertical-align: middle;
+            width: 14.28%;
         }
         .calendar-table td {
             cursor: pointer;
@@ -51,9 +48,8 @@
             font-size: 0.9em;
             color: #666;
             font-weight: 500;
-            padding: 0.5rem 0; /* Espaçamento vertical para os nomes dos dias */
+            padding: 0.5rem 0;
         }
-
         /* --- ESTILOS DAS DATAS ESPECIAIS --- */
         .evento {
             background-color: #d1e7dd !important; /* Verde */
@@ -138,12 +134,35 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', function() {
-        // ... (Todo o JavaScript permanece o mesmo)
         const today = new Date();
         const year = today.getFullYear();
         const eventModal = new bootstrap.Modal(document.getElementById('eventModal'));
         let clickedDate = null;
         let events = JSON.parse(localStorage.getItem('calendarEvents')) || {};
+        
+        // --- INÍCIO DA LÓGICA DE FERIADOS ---
+        const feriados = {
+            '01-01': 'Confraternização Universal', '04-21': 'Tiradentes', '05-01': 'Dia do Trabalho',
+            '09-07': 'Independência do Brasil', '10-12': 'Nossa Senhora Aparecida', '11-02': 'Finados',
+            '11-15': 'Proclamação da República', '12-25': 'Natal',
+            // Feriados específicos do Rio de Janeiro
+            '01-20': 'Dia de São Sebastião', '04-23': 'Dia de São Jorge', '11-20': 'Dia da Consciência Negra'
+        };
+
+        function getEaster(year) {
+            const a = year % 19, b = Math.floor(year / 100), c = year % 100, d = Math.floor(b / 4), e = b % 4, f = Math.floor((b + 8) / 25), g = Math.floor((b - f + 1) / 3), h = (19 * a + b - d - g + 15) % 30, i = Math.floor(c / 4), k = c % 4, l = (32 + 2 * e + 2 * i - h - k) % 7, m = Math.floor((a + 11 * h + 22 * l) / 451), month = Math.floor((h + l - 7 * m + 114) / 31), day = ((h + l - 7 * m + 114) % 31) + 1;
+            return new Date(year, month - 1, day);
+        }
+
+        const pascoa = getEaster(year);
+        const sextaSanta = new Date(pascoa);
+        sextaSanta.setDate(pascoa.getDate() - 2);
+        const carnaval = new Date(pascoa);
+        carnaval.setDate(pascoa.getDate() - 47);
+        feriados[sextaSanta.toISOString().slice(5, 10)] = 'Paixão de Cristo';
+        feriados[carnaval.toISOString().slice(5, 10)] = 'Carnaval';
+        // --- FIM DA LÓGICA DE FERIADOS ---
+
         function renderCalendar() {
             document.getElementById('calendar-title').textContent = `Calendário Acadêmico ${year}`;
             const container = document.getElementById('calendar-container');
@@ -194,27 +213,43 @@
                 container.appendChild(monthCard);
             }
         }
+
         function applyCellStyles(cell, dateString, dayOfWeek) {
             const [y, m, d] = dateString.split('-').map(Number);
             const currentDate = new Date(y, m - 1, d);
+            const dateStringMMDD = dateString.slice(5); // Pega 'MM-DD' da data
+
+            // Limpa estilos antigos para evitar acúmulo
+            cell.className = '';
+
+            // REGRA DE PRIORIDADE (do menor para o maior)
+            // 1. Fim de semana
+            const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
+            if (isWeekend) {
+                cell.classList.add('final-de-semana');
+            }
+            // 2. Período letivo (não se aplica a fins de semana)
+            const periodoLetivoInicio = new Date('2025-07-28T03:00:00Z');
+            const periodoLetivoFim = new Date('2025-12-19T03:00:00Z');
+            if (year === 2025 && !isWeekend && currentDate >= periodoLetivoInicio && currentDate <= periodoLetivoFim) {
+                cell.classList.add('periodo-letivo');
+            }
+            // 3. Evento do usuário
             if (events[dateString]) {
                 cell.classList.add('evento');
                 cell.title = events[dateString];
             }
-            const periodoLetivoInicio = new Date('2025-07-28T03:00:00Z');
-            const periodoLetivoFim = new Date('2025-12-19T03:00:00Z');
-            const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
-            if (year === 2025 && !isWeekend && currentDate >= periodoLetivoInicio && currentDate <= periodoLetivoFim) {
-                cell.classList.add('periodo-letivo');
+            // 4. Feriado (sobrescreve tudo, exceto o 'hoje')
+            if (feriados[dateStringMMDD]) {
+                cell.classList.add('feriado');
+                cell.title = feriados[dateStringMMDD];
             }
-            if (isWeekend) {
-                cell.classList.add('final-de-semana');
-            }
-            // ... (lógica de feriados)
+            // 5. Dia de hoje (estilo de borda, não interfere com o fundo)
             if (d === today.getDate() && (m - 1) === today.getMonth() && y === today.getFullYear()) {
                 cell.classList.add('today');
             }
         }
+
         function handleDayClick(dateString) {
             clickedDate = dateString;
             const eventText = events[clickedDate] || '';
@@ -222,25 +257,29 @@
             document.getElementById('eventModalLabel').textContent = `Evento para ${new Date(clickedDate + 'T03:00:00').toLocaleDateString('pt-BR')}`;
             eventModal.show();
         }
+
         function saveEvents() {
             localStorage.setItem('calendarEvents', JSON.stringify(events));
             renderCalendar();
         }
+
         document.getElementById('saveEventBtn').addEventListener('click', function() {
             const eventText = document.getElementById('event-text').value;
-            if (eventText) {
-                events[clickedDate] = eventText;
+            if (eventText.trim()) {
+                events[clickedDate] = eventText.trim();
             } else {
                 delete events[clickedDate];
             }
             saveEvents();
             eventModal.hide();
         });
+
         document.getElementById('deleteEventBtn').addEventListener('click', function() {
             delete events[clickedDate];
             saveEvents();
             eventModal.hide();
         });
+
         renderCalendar();
     });
     </script>
