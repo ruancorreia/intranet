@@ -102,7 +102,7 @@
             <div class="legend-item"><div class="legend-color" style="background-color: #d1e7dd;"></div><span>Dia com Evento</span></div>
             <div class="legend-item"><div class="legend-color" style="background-color: #cfe2ff;"></div><span>Período Letivo</span></div>
             <div class="legend-item"><div class="legend-color" style="background-color: #fff3cd;"></div><span>Feriado</span></div>
-            <div class="legend-item"><div class="legend-color"><span style="color: #dc3545;">D S</span></div><span>Final de Semana</span></div>
+            <div class="legend-item"><div class="legend-color" style="background-color: #f8d7da;"></div><span>Final de Semana</span></div>
             <div class="legend-item"><div class="legend-color" style="border: 2px solid #0d6efd;"></div><span>Hoje</span></div>
         </div>
     </main>
@@ -140,12 +140,10 @@
         let clickedDate = null;
         let events = JSON.parse(localStorage.getItem('calendarEvents')) || {};
         
-        // --- INÍCIO DA LÓGICA DE FERIADOS ---
         const feriados = {
             '01-01': 'Confraternização Universal', '04-21': 'Tiradentes', '05-01': 'Dia do Trabalho',
             '09-07': 'Independência do Brasil', '10-12': 'Nossa Senhora Aparecida', '11-02': 'Finados',
             '11-15': 'Proclamação da República', '12-25': 'Natal',
-            // Feriados específicos do Rio de Janeiro
             '01-20': 'Dia de São Sebastião', '04-23': 'Dia de São Jorge', '11-20': 'Dia da Consciência Negra'
         };
 
@@ -161,7 +159,6 @@
         carnaval.setDate(pascoa.getDate() - 47);
         feriados[sextaSanta.toISOString().slice(5, 10)] = 'Paixão de Cristo';
         feriados[carnaval.toISOString().slice(5, 10)] = 'Carnaval';
-        // --- FIM DA LÓGICA DE FERIADOS ---
 
         function renderCalendar() {
             document.getElementById('calendar-title').textContent = `Calendário Acadêmico ${year}`;
@@ -217,34 +214,25 @@
         function applyCellStyles(cell, dateString, dayOfWeek) {
             const [y, m, d] = dateString.split('-').map(Number);
             const currentDate = new Date(y, m - 1, d);
-            const dateStringMMDD = dateString.slice(5); // Pega 'MM-DD' da data
-
-            // Limpa estilos antigos para evitar acúmulo
+            const dateStringMMDD = dateString.slice(5);
             cell.className = '';
-
-            // REGRA DE PRIORIDADE (do menor para o maior)
-            // 1. Fim de semana
             const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
             if (isWeekend) {
                 cell.classList.add('final-de-semana');
             }
-            // 2. Período letivo (não se aplica a fins de semana)
             const periodoLetivoInicio = new Date('2025-07-28T03:00:00Z');
             const periodoLetivoFim = new Date('2025-12-19T03:00:00Z');
             if (year === 2025 && !isWeekend && currentDate >= periodoLetivoInicio && currentDate <= periodoLetivoFim) {
                 cell.classList.add('periodo-letivo');
             }
-            // 3. Evento do usuário
             if (events[dateString]) {
                 cell.classList.add('evento');
                 cell.title = events[dateString];
             }
-            // 4. Feriado (sobrescreve tudo, exceto o 'hoje')
             if (feriados[dateStringMMDD]) {
                 cell.classList.add('feriado');
                 cell.title = feriados[dateStringMMDD];
             }
-            // 5. Dia de hoje (estilo de borda, não interfere com o fundo)
             if (d === today.getDate() && (m - 1) === today.getMonth() && y === today.getFullYear()) {
                 cell.classList.add('today');
             }
