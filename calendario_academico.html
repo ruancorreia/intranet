@@ -50,22 +50,28 @@
             font-weight: 500;
             padding: 0.5rem 0;
         }
-        /* --- ESTILOS DAS DATAS ESPECIAIS --- */
+        
+        /* --- ESTILOS DAS DATAS ESPECIAIS (ORDEM DE PRIORIDADE CORRIGIDA) --- */
+        
+        /* Prioridade 1: Dia Letivo (a mais baixa) */
+        .periodo-letivo {
+            background-color: #e7f1ff !important; /* Azul bem mais claro */
+            color: #0a58ca; /* Texto azul escuro para contraste */
+        }
+        /* Prioridade 2: Evento do usuário */
         .evento {
             background-color: #d1e7dd !important; /* Verde */
             color: #0f5132 !important;
             font-weight: bold;
         }
+        /* Prioridade 3: Feriado (a mais alta) */
         .feriado {
             background-color: #fff3cd !important; /* Amarelo */
             font-weight: bold;
             color: #664d03 !important;
         }
-        .periodo-letivo {
-            background-color: #cfe2ff !important; /* Azul */
-            font-weight: bold;
-            color: #052c65;
-        }
+        
+        /* Outros estilos */
         .final-de-semana {
             color: #dc3545; /* Vermelho */
         }
@@ -99,8 +105,8 @@
         </header>
         <div class="calendar-container" id="calendar-container"></div>
         <div class="legend">
+            <div class="legend-item"><div class="legend-color" style="background-color: #e7f1ff;"></div><span>Período Letivo</span></div>
             <div class="legend-item"><div class="legend-color" style="background-color: #d1e7dd;"></div><span>Dia com Evento</span></div>
-            <div class="legend-item"><div class="legend-color" style="background-color: #cfe2ff;"></div><span>Período Letivo</span></div>
             <div class="legend-item"><div class="legend-color" style="background-color: #fff3cd;"></div><span>Feriado</span></div>
             <div class="legend-item"><div class="legend-color" style="background-color: #f8d7da;"></div><span>Final de Semana</span></div>
             <div class="legend-item"><div class="legend-color" style="border: 2px solid #0d6efd;"></div><span>Hoje</span></div>
@@ -216,6 +222,7 @@
             const currentDate = new Date(y, m - 1, d);
             const dateStringMMDD = dateString.slice(5);
             cell.className = '';
+
             const isWeekend = (dayOfWeek === 0 || dayOfWeek === 6);
             if (isWeekend) {
                 cell.classList.add('final-de-semana');
